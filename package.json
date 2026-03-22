@@ -1,0 +1,24 @@
+{
+  "name": "warframemcp",
+  "version": "0.1.0",
+  "description": "An xmcp application with tool syntax",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "xmcp build",
+    "dev": "xmcp dev",
+    "start": "node dist/stdio.js"
+  },
+  "dependencies": {
+    "xmcp": "0.6.5",
+    "zod": "^4.0.0"
+  },
+  "main": "./dist/stdio.js",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "warframemcp": "./dist/stdio.js"
+  }
+}
