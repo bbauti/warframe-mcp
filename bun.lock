@@ -5,6 +5,7 @@
     "": {
       "name": "warframemcp",
       "dependencies": {
+        "warframe-items": "^1.1269.87",
         "xmcp": "0.6.5",
         "zod": "^4.0.0",
       },
@@ -352,6 +353,10 @@
     "unpipe": ["unpipe@1.0.0", "", {}, "sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ=="],
 
     "vary": ["vary@1.1.2", "", {}, "sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg=="],
+
+    "warframe-items": ["warframe-items@1.1269.87", "", { "peerDependencies": { "warframe-worldstate-data": "^2.24" } }, "sha512-FBHlgLGWxgVFJY2SgGC6afj6xzi6apl+kXm3NLbSg5knYRKpmYqSX6/uv3O3mJniIwMoBajJ9TW7NCEVkxQmXQ=="],
+
+    "warframe-worldstate-data": ["warframe-worldstate-data@2.25.0", "", {}, "sha512-orgH0ZTrGeZaU300VqUdMETpAARrePDmBIQlrsmch10cmOyPL/tykFO44JacMYYC2xSoyz+n7irFwx5pTyWA1w=="],
 
     "which": ["which@2.0.2", "", { "dependencies": { "isexe": "^2.0.0" }, "bin": { "node-which": "./bin/node-which" } }, "sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA=="],
 

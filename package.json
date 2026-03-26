@@ -11,6 +11,7 @@
     "start": "node dist/stdio.js"
   },
   "dependencies": {
+    "warframe-items": "^1.1269.87",
     "xmcp": "0.6.5",
     "zod": "^4.0.0"
   },
