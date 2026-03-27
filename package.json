@@ -1,7 +1,14 @@
 {
-  "name": "warframemcp",
-  "version": "0.1.0",
-  "description": "An xmcp application with tool syntax",
+  "name": "@bbauti/warframe-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for Warframe — look up items, weapons, warframes, mods, market prices, drop sources, build recommendations, world state, and more.",
+  "license": "MIT",
+  "author": "bbauti",
+  "keywords": ["mcp", "warframe", "model-context-protocol", "ai", "claude", "xmcp", "gaming"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bbauti/warframe-mcp"
+  },
   "engines": {
     "node": ">=20.0.0"
   },
@@ -20,6 +27,6 @@
     "dist"
   ],
   "bin": {
-    "warframemcp": "./dist/stdio.js"
+    "warframe-mcp": "./dist/stdio.js"
   }
 }

@@ -1,177 +1,72 @@
-# xmcp Application
+# @bbauti/warframe-mcp
 
-This project was created with [create-xmcp-app](https://github.com/basementstudio/xmcp).
+A Model Context Protocol server for Warframe — look up items, weapons, warframes, mods, market prices, drop sources, build recommendations, world state, and more.
 
-## Getting Started
+## Installation
 
-First, run the development server:
+### Claude Code
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+claude mcp add warframe-mcp -- npx @bbauti/warframe-mcp
 ```
 
-This will start the MCP server with the selected transport method.
+### Manual (claude_desktop_config.json or other MCP clients)
 
-## Project Structure
-
-This project uses the structured approach where tools, prompts, and resources are automatically discovered from their respective directories:
-
-- `src/tools` - Tool definitions
-- `src/prompts` - Prompt templates
-- `src/resources` - Resource handlers
-
-### Tools
-
-Each tool is defined in its own file with the following structure:
-
-```typescript
-import { z } from "zod";
-import { type InferSchema, type ToolMetadata } from "xmcp";
-
-export const schema = {
-  name: z.string().describe("The name of the user to greet"),
-};
-
-export const metadata: ToolMetadata = {
-  name: "greet",
-  description: "Greet the user",
-  annotations: {
-    title: "Greet the user",
-    readOnlyHint: true,
-    destructiveHint: false,
-    idempotentHint: true,
-  },
-};
-
-export default function greet({ name }: InferSchema<typeof schema>) {
-  return `Hello, ${name}!`;
+```json
+{
+  "mcpServers": {
+    "warframe-mcp": {
+      "command": "npx",
+      "args": ["@bbauti/warframe-mcp"]
+    }
+  }
 }
 ```
 
-### Prompts
+## Tools
 
-Prompts are template definitions for AI interactions:
+| Tool | Description |
+|------|-------------|
+| `get_item` | Search any item by name (weapons, warframes, mods, resources) |
+| `get_weapon` | Detailed weapon stats: damage, crit, status, fire rate, riven disposition |
+| `get_warframe` | Warframe stats: health, shields, armor, energy, abilities, passive |
+| `get_mod` | Mod info with stats at each rank, drain, polarity, rarity |
+| `search_drops` | Find where items drop: enemies, missions, relics, drop rates |
+| `farm_guide` | Farming guide with drop sources ranked by efficiency and buy-vs-farm comparison |
+| `check_market` | warframe.market prices: median, range, volume, trends, live sell offers |
+| `recommend_build` | Optimal mod builds calculated with real damage formulas |
+| `search_builds` | Search Overframe.gg for community-voted public builds with optional keyword filtering |
+| `compare_weapons` | Side-by-side comparison of 2-4 weapons with optional DPS calculations |
+| `search_wiki` | Search the Warframe Wiki for detailed game info |
+| `search_community` | Search r/Warframe for discussions, builds, and tier lists |
+| `world_state` | Live game state: fissures, sortie, invasions, Baro, cycles, events |
 
-```typescript
-import { z } from "zod";
-import { type InferSchema, type PromptMetadata } from "xmcp";
+## Resources
 
-export const schema = {
-  code: z.string().describe("The code to review"),
-};
+| Resource | Description |
+|----------|-------------|
+| `damage-types` | Reference for all damage types and their properties |
+| `status-effects` | Reference for all status effects and their behavior |
 
-export const metadata: PromptMetadata = {
-  name: "review-code",
-  title: "Review Code",
-  description: "Review code for best practices and potential issues",
-  role: "user",
-};
+## Prompts
 
-export default function reviewCode({ code }: InferSchema<typeof schema>) {
-  return `Please review this code: ${code}`;
-}
-```
+| Prompt | Description |
+|--------|-------------|
+| `warframe-expert` | Activates a Warframe expert persona with deep game knowledge |
+| `build-advisor` | Guides through weapon or warframe build optimization |
 
-### Resources
+## Credits
 
-Resources provide data or content with URI-based access:
+Data sourced from:
 
-```typescript
-import { z } from "zod";
-import { type ResourceMetadata, type InferSchema } from "xmcp";
+- [warframe-items](https://github.com/WFCD/warframe-items) — item and mod data
+- [Warframe Community API](https://docs.warframestat.us/) — world state and drop data
+- [warframe.market](https://warframe.market/) — market prices and trade data
+- [Warframe Wiki](https://warframe.fandom.com/) — game documentation
+- [r/Warframe](https://www.reddit.com/r/Warframe/) — community discussions
 
-export const schema = {
-  userId: z.string().describe("The ID of the user"),
-};
+Built with [xmcp](https://xmcp.dev).
 
-export const metadata: ResourceMetadata = {
-  name: "user-profile",
-  title: "User Profile",
-  description: "User profile information",
-};
+## License
 
-export default function handler({ userId }: InferSchema<typeof schema>) {
-  return `Profile data for user ${userId}`;
-}
-```
-
-## Adding New Components
-
-### Adding New Tools
-
-To add a new tool:
-
-1. Create a new `.ts` file in the `src/tools` directory
-2. Export a `schema` object defining the tool parameters using Zod
-3. Export a `metadata` object with tool information
-4. Export a default function that implements the tool logic
-
-### Adding New Prompts
-
-To add a new prompt:
-
-1. Create a new `.ts` file in the `src/prompts` directory
-2. Export a `schema` object defining the prompt parameters using Zod
-3. Export a `metadata` object with prompt information and role
-4. Export a default function that returns the prompt text
-
-### Adding New Resources
-
-To add a new resource:
-
-1. Create a new `.ts` file in the `src/resources` directory
-2. Use folder structure to define the URI (e.g., `(users)/[userId]/profile.ts` → `users://{userId}/profile`)
-3. Export a `schema` object for dynamic parameters (optional for static resources)
-4. Export a `metadata` object with resource information
-5. Export a default function that returns the resource content
-
-## Building for Production
-
-To build your project for production:
-
-```bash
-npm run build
-# or
-yarn build
-# or
-pnpm build
-```
-
-This will compile your TypeScript code and output it to the `dist` directory.
-
-## Running the Server
-
-You can run the server for the transport built with:
-
-- HTTP: `node dist/http.js`
-- STDIO: `node dist/stdio.js`
-
-Given the selected transport method, you will have a custom start script added to the `package.json` file.
-
-For HTTP:
-
-```bash
-npm run start-http
-# or
-yarn start-http
-# or
-pnpm start-http
-```
-
-For STDIO:
-
-```bash
-npm run start-stdio
-# or
-yarn start-stdio
-# or
-pnpm start-stdio
-```
-
-## Learn More
-
-- [xmcp Documentation](https://xmcp.dev/docs)
+MIT
